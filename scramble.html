@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <title>game</title>
+    <style>
+       
+        body{
+            box-sizing: border-box;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+
+        .top-section{
+            
+            height: 20vh;
+            background-color: rgb(75, 196, 19);
+            
+        }
+        .top-section h1{
+            text-transform: uppercase;
+            color: white;
+            word-spacing: 7px;
+            letter-spacing: 3px;
+            font-weight: 600;
+            text-shadow: 5px 5px 2px gray;
+            text-align: center;
+            
+           
+        }
+        .game-section{
+            
+            height: 80vh;
+
+            background-color: rgb(34, 221, 159);
+        }
+
+        .main{
+            
+            width: 50%;
+            height: 60%;
+            font-weight: 500;
+            
+            background-color: rgb(73, 163, 32);
+            box-shadow: 1px 2px 2px rgb(54, 53, 53);
+            text-align: center;
+            
+        }
+       
+
+         .button-class{
+             
+            line-height: 30px;
+            word-spacing: 3px;
+            letter-spacing: 1px;
+            font-weight: 600;
+            transition-property: all;
+            transition-duration: 0.5s;
+            transition-timing-function: cubic-bezier(0.65, -0.25, 0.25, 1.95);
+        }
+
+        .main input{
+            line-height: 30px;
+            
+            border: none;
+            outline: none;
+            text-decoration: none;
+            border-radius: 20px;
+            box-shadow: inset 3px 3px 3px #919394,
+                        inset -3px -3px 3px #bdb9b9;
+        }
+
+        .input-hidden{
+            display: none;
+            
+        }
+
+        .button-class:hover{
+            letter-spacing: 3px;
+            word-spacing: 4px;
+           
+           
+        }
+    </style>
+
+  </head>
+  <body>
+
+    <div class="container-fluid ">
+
+        
+       <div class="top-section p-3 d-flex justify-content-center align-items-center  ">
+            
+          <h1 >play the word guess game  </h1>
+                 
+       </div>
+            
+        <div class="game-section p-3 d-flex justify-content-center align-items-center">
+            
+            <div class="main p-2  d-flex flex-column  justify-content-center align-items-center ">
+               
+                <h3 class="mb-3 msg mx-auto "> </h3>
+                <input type="text" class="input-hidden p-2 " >
+                <button class="button-class mt-3  btn btn-success mt-2">click here to start</button>
+                
+            
+            </div>
+                   
+        </div>
+ 
+    </div>
+
+
+    
+    <script>
+
+        const message=document.querySelector('.msg');
+        const guess=document.querySelector('input');
+        const btn=document.querySelector('.button-class')
+        let play=false;
+        let new_random_word=" ";
+        let scramble_word=" ";
+        let words=['php','java','ajax','bootstrap','html','css','python','c','c++','javascript','mysql','nodejs','angular','jquery','wordpress']
+
+        btn.addEventListener('click',function(){
+            if(!play){
+                play=true;
+                btn.innerHTML="Guess";
+                guess.classList.toggle('input-hidden');
+                new_random_word = createNewWord();
+                scramble_word=scrambleWord(new_random_word.split(""));
+                
+                message.innerHTML=`Guess the word : ${scramble_word}`;
+                
+            }else{
+                let guess_word =guess.value;
+                if(new_random_word===guess_word){
+                    play=false;
+                    message.innerHTML=`You are correct.word is ${new_random_word}.`;
+                    btn.innerHTML="start again"
+                    guess.value="";
+                    guess.classList.toggle('input-hidden');
+                }else{
+                    message.innerHTML=`Sorry it is not correct.Please try again: ${scramble_word}`;
+                    guess.value="";
+                }
+            }
+        })
+
+
+        let createNewWord = () =>{
+            let random_word_index=Math.floor(Math.random() * words.length);
+            let newWord= words[random_word_index]
+            return newWord;
+           
+        }
+
+        let scrambleWord = (arr) =>{
+            for(let i=arr.length-1; i>=0; i--){
+                let temp=arr[i]
+                console.log(`${i} =${temp} `);
+                let j=Math.floor(Math.random() * i);
+                
+                let a=arr[i]=arr[j];
+                let b=arr[j]=temp;
+                
+                
+                
+                
+            }
+            console.log(arr)
+            return arr.join("");
+        }
+    </script>
+
+  </body>
+</html>
